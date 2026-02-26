@@ -8,7 +8,7 @@ export default function Login() {
         {/* LEFT: Illustration */}
         <div className="w-1/2 bg-[#FFF4D6] flex items-center justify-center">
           <img
-            src="/src/assets/images/login-illustration.png"
+            src="/src/assets/images/login-illustration.jpg"
             alt="Login Illustration"
             className="w-[360px]"
           />
