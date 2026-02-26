@@ -59,6 +59,20 @@ const salesMonthData = [
 
 const COLORS = ["#22c55e", "#3b82f6", "#f97316", "#a855f7"];
 
+const topSellingProducts = [
+  { img: "chicken.jpg", name: "Chicken Meat Buffalo Wing", count: 59 },
+  { img: "chair.jpg", name: "Audi Sheesham Wood", count: 34 },
+  { img: "grapes.jpg", name: "Black Grapes", count: 32 },
+  { img: "steak.jpg", name: "Steak Cattle Meat", count: 31 },
+  { img: "beef.jpg", name: "Aged Beef Steak Beef", count: 30 },
+  { img: "beef2.jpg", name: "Aged Beef Steak Beef", count: 22 },
+  { img: "duck.jpg", name: "Duck Meat Premium", count: 19 },
+  { img: "mutton.jpg", name: "Fresh Mutton Meat", count: 17 },
+  { img: "honey.jpg", name: "Organic Honey Jar", count: 15 },
+  { img: "butter.jpg", name: "Fresh Dairy Butter", count: 12 },
+  
+];
+
 /* ------------------ COMPONENT ------------------ */
 
 export default function Dashboard() {
@@ -81,7 +95,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* TOP CARDS */}
+      {/* MAIN GRID */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
 
         {/* Top 5 Category Sales */}
@@ -92,14 +106,7 @@ export default function Dashboard() {
           <div className="h-32">
             <ResponsiveContainer>
               <PieChart>
-                <Tooltip
-                  formatter={(value, name) => [`${value}`, name]}
-                  contentStyle={{
-                    backgroundColor: "#fff",
-                    borderRadius: "8px",
-                    border: "1px solid #e5e7eb",
-                  }}
-                />
+                <Tooltip />
                 <Pie
                   data={categoryData}
                   innerRadius={40}
@@ -123,19 +130,8 @@ export default function Dashboard() {
           <div className="h-24 mt-3">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={orderBarData}>
-                <Tooltip
-                  cursor={{ fill: "#f3f4f6" }}
-                  contentStyle={{
-                    backgroundColor: "#fff",
-                    borderRadius: "8px",
-                    border: "1px solid #e5e7eb",
-                  }}
-                />
-                <Bar
-                  dataKey="orders"
-                  fill="#3b82f6"
-                  radius={[4, 4, 0, 0]}
-                />
+                <Tooltip />
+                <Bar dataKey="orders" fill="#3b82f6" />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -149,80 +145,62 @@ export default function Dashboard() {
           <div className="h-24 mt-3">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={earningData}>
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: "#fff",
-                    borderRadius: "8px",
-                    border: "1px solid #e5e7eb",
-                  }}
-                />
+                <Tooltip />
                 <Line
                   type="monotone"
                   dataKey="value"
                   stroke="#f97316"
                   strokeWidth={2}
                   dot={false}
-                  activeDot={{ r: 6 }}
                 />
               </LineChart>
             </ResponsiveContainer>
           </div>
         </div>
 
-        {/* Top Selling Products */}
-        <div className="bg-white rounded-xl p-4 border">
-          <p className="text-sm text-gray-500 mb-3">
-            Top Selling Products
-          </p>
+        {/* TOP SELLING PRODUCTS */}
+        <div className="row-span-2 bg-white rounded-xl p-6 border flex flex-col">
+          <div className="mb-3">
+            <h3 className="text-base font-semibold text-gray-800">
+              Top Selling Products
+            </h3>
+            <p className="text-xs text-gray-500">
+              We have listed 44 total products.
+            </p>
+          </div>
 
-          <ul className="space-y-3">
-            <li className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <img
-                  src="/src/assets/images/products/chicken.jpg"
-                  className="w-10 h-10 rounded-lg object-cover border"
-                />
-                <span className="text-sm">
-                  Chicken Meat Buffalo Wing
+          {/* SCROLL AREA */}
+          <ul className="space-y-3 overflow-y-auto pr-2 flex-1">
+            {topSellingProducts.map((item, i) => (
+              <li
+                key={i}
+                className="flex items-center justify-between py-1"
+              >
+                <div className="flex items-center gap-3">
+                  <img
+                    src={`/src/assets/images/products/${item.img}`}
+                    className="w-10 h-10 rounded-md object-cover border"
+                    alt={item.name}
+                  />
+                  <div>
+                    <p className="text-sm text-gray-800 leading-tight">
+                      {item.name}
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      Brand: Bird Wings
+                    </p>
+                  </div>
+                </div>
+                <span className="text-sm font-medium text-gray-700">
+                  ({item.count})
                 </span>
-              </div>
-              <span className="font-medium">(59)</span>
-            </li>
-
-            <li className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <img
-                  src="/src/assets/images/products/chair.jpg"
-                  className="w-10 h-10 rounded-lg object-cover border"
-                />
-                <span className="text-sm">
-                  Audi Sheesham Wood
-                </span>
-              </div>
-              <span className="font-medium">(34)</span>
-            </li>
-
-            <li className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <img
-                  src="/src/assets/images/products/grapes.jpg"
-                  className="w-10 h-10 rounded-lg object-cover border"
-                />
-                <span className="text-sm">
-                  Black Grapes
-                </span>
-              </div>
-              <span className="font-medium">(32)</span>
-            </li>
+              </li>
+            ))}
           </ul>
         </div>
-      </div>
-
-      {/* SALES + TOP SELLING LAYOUT */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
         {/* Sales This Month */}
-        <div className="lg:col-span-2 bg-white rounded-xl p-6 border">
+        <div className="lg:col-span-3 bg-white rounded-xl p-6 border">
           <p className="text-sm text-gray-500">Sales This Months</p>
           <h3 className="text-xl font-semibold mb-4">$780,980.03</h3>
 
@@ -231,13 +209,7 @@ export default function Dashboard() {
               <AreaChart data={salesMonthData}>
                 <XAxis dataKey="day" />
                 <YAxis />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: "#fff",
-                    borderRadius: "8px",
-                    border: "1px solid #e5e7eb",
-                  }}
-                />
+                <Tooltip />
                 <Area
                   type="monotone"
                   dataKey="sales"
@@ -248,99 +220,32 @@ export default function Dashboard() {
             </ResponsiveContainer>
           </div>
         </div>
-
-        {/* Tall Top Selling Products */}
-        <div className="bg-white rounded-xl p-6 border">
-          <p className="text-sm text-gray-500 mb-4">
-            Top Selling Products
-          </p>
-
-          <ul className="space-y-4">
-            <li className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <img
-                  src="/src/assets/images/products/chicken.jpg"
-                  className="w-12 h-12 rounded-lg object-cover border"
-                />
-                <span className="text-sm">
-                  Chicken Meat Buffalo Wing
-                </span>
-              </div>
-              <span className="font-medium">(59)</span>
-            </li>
-
-            <li className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <img
-                  src="/src/assets/images/products/chair.jpg"
-                  className="w-12 h-12 rounded-lg object-cover border"
-                />
-                <span className="text-sm">
-                  Audi Sheesham Wood
-                </span>
-              </div>
-              <span className="font-medium">(34)</span>
-            </li>
-
-            <li className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <img
-                  src="/src/assets/images/products/grapes.jpg"
-                  className="w-12 h-12 rounded-lg object-cover border"
-                />
-                <span className="text-sm">
-                  Black Grapes
-                </span>
-              </div>
-              <span className="font-medium">(32)</span>
-            </li>
-          </ul>
-        </div>
       </div>
 
-      {/* ORDER STATS WITH ICONS */}
+      {/* ORDER STATS */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div className="bg-white rounded-xl p-4 border flex items-center gap-4">
-          <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center">
-            <ShoppingCart className="text-blue-600" size={20} />
-          </div>
-          <div>
-            <p className="text-xl font-semibold">227</p>
-            <p className="text-sm text-gray-500">Total Orders</p>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-xl p-4 border flex items-center gap-4">
-          <div className="w-10 h-10 rounded-lg bg-yellow-100 flex items-center justify-center">
-            <Clock className="text-yellow-600" size={20} />
-          </div>
-          <div>
-            <p className="text-xl font-semibold">97</p>
-            <p className="text-sm text-gray-500">Order Pending</p>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-xl p-4 border flex items-center gap-4">
-          <div className="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center">
-            <Loader className="text-purple-600" size={20} />
-          </div>
-          <div>
-            <p className="text-xl font-semibold">0</p>
-            <p className="text-sm text-gray-500">Order Processing</p>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-xl p-4 border flex items-center gap-4">
-          <div className="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center">
-            <CheckCircle className="text-green-600" size={20} />
-          </div>
-          <div>
-            <p className="text-xl font-semibold">130</p>
-            <p className="text-sm text-gray-500">Total Delivered</p>
-          </div>
-        </div>
+        <Stat icon={<ShoppingCart className="text-blue-600" />} label="Total Orders" value="227" />
+        <Stat icon={<Clock className="text-yellow-600" />} label="Order Pending" value="97" />
+        <Stat icon={<Loader className="text-purple-600" />} label="Order Processing" value="0" />
+        <Stat icon={<CheckCircle className="text-green-600" />} label="Total Delivered" value="130" />
       </div>
 
+    </div>
+  );
+}
+
+/* ------------------ STAT CARD ------------------ */
+
+function Stat({ icon, label, value }) {
+  return (
+    <div className="bg-white rounded-xl p-4 border flex items-center gap-4">
+      <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center">
+        {icon}
+      </div>
+      <div>
+        <p className="text-xl font-semibold">{value}</p>
+        <p className="text-sm text-gray-500">{label}</p>
+      </div>
     </div>
   );
 }
