@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-
 export default function Login() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#F8F9FA]">
@@ -8,7 +7,7 @@ export default function Login() {
         {/* LEFT: Illustration */}
         <div className="w-1/2 bg-[#FFF4D6] flex items-center justify-center">
           <img
-            src="/src/assets/images/login-illustration.jpg"
+            src="/login-illustration.jpg"
             alt="Login Illustration"
             className="w-[360px]"
           />
