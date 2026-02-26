@@ -10,6 +10,41 @@ import {
 
 const PAGE_SIZE = 15;
 
+/* ─── Colorful theme chips ───────────────────────────── */
+const THEME_COLORS = {
+  "Grocery":     { bg: "#f0fdf4", color: "#16a34a", border: "#bbf7d0" },
+  "Organic":     { bg: "#ecfdf5", color: "#059669", border: "#6ee7b7" },
+  "Halal Food":  { bg: "#eff6ff", color: "#2563eb", border: "#bfdbfe" },
+  "Furniture":   { bg: "#faf5ff", color: "#7c3aed", border: "#ddd6fe" },
+};
+const CHIP_FALLBACKS = [
+  { bg: "#fff7ed", color: "#c2410c", border: "#fed7aa" },
+  { bg: "#fdf4ff", color: "#a21caf", border: "#f0abfc" },
+  { bg: "#fff1f2", color: "#be123c", border: "#fecdd3" },
+  { bg: "#f0f9ff", color: "#0369a1", border: "#bae6fd" },
+  { bg: "#fefce8", color: "#a16207", border: "#fef08a" },
+  { bg: "#f0fdfa", color: "#0d9488", border: "#99f6e4" },
+];
+function themeStyle(name, idx) {
+  return THEME_COLORS[name] || CHIP_FALLBACKS[idx % CHIP_FALLBACKS.length];
+}
+function ThemeChips({ themes }) {
+  return (
+    <div style={{ display: "flex", flexWrap: "wrap", gap: 4, minWidth: 140 }}>
+      {themes.map((t, i) => {
+        const s = themeStyle(t, i);
+        return (
+          <span key={i} style={{
+            fontSize: 11, padding: "2px 8px", borderRadius: 20, fontWeight: 500,
+            background: s.bg, color: s.color, border: `1px solid ${s.border}`,
+            whiteSpace: "nowrap",
+          }}>{t}</span>
+        );
+      })}
+    </div>
+  );
+}
+
 /* ─── Action menu ────────────────────────────────────── */
 function ActionMenu({ product, onView, onEdit, onDelete }) {
   const [open, setOpen] = useState(false);
@@ -177,7 +212,9 @@ export default function Products() {
                     <td style={td}>
                       <Toggle value={p.published} onChange={(v) => productStore.update(p.id, { published: v })} />
                     </td>
-                    <td style={{ ...td, fontSize: 12 }}>{`[${p.themes.map((t) => `"${t}"`).join(",")}]`}</td>
+                    <td style={{ ...td, fontSize: 12 }}>
+                      <ThemeChips themes={p.themes} />
+                    </td>
                     <td style={td}>
                       <FeaturedDot value={p.featured} onChange={(v) => productStore.update(p.id, { featured: v })} />
                     </td>
@@ -201,13 +238,6 @@ export default function Products() {
           <Pagination page={page} totalPages={totalPages} setPage={setPage} />
         </div>
       </div>
-
-      {/* Footer credit */}
-      <div style={{ marginTop: 24, display: "flex", justifyContent: "space-between", fontSize: 12, color: "#94a3b8" }}>
-        <span>© All Designed, Developed and 💕 by <span style={{ color: "#22c55e", fontWeight: 500 }}>ThemeTags</span></span>
-        <span>Grostore Online Store v4.6.0</span>
-      </div>
-
       {/* Modals */}
       <ViewProductModal open={!!viewProduct} onClose={() => setViewProduct(null)} product={viewProduct} />
       <ProductFormModal open={!!editProduct} onClose={() => setEditProduct(null)} initial={editProduct}
