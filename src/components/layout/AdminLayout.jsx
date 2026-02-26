@@ -1,18 +1,32 @@
+// src/components/layout/AdminLayout.jsx
+
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
-import Topbar from "./Topbar";
+import Topbar  from "./Topbar";
 
 export default function AdminLayout() {
   return (
-    <div className="flex min-h-screen bg-gray-100">
-      {/* Sidebar */}
+    <div style={{
+      display: "flex",
+      minHeight: "100vh",
+      background: "#f8fafc",
+      fontFamily: "system-ui, sans-serif",
+    }}>
+      {/* Fixed left sidebar */}
       <Sidebar />
 
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col">
+      {/* Right column: topbar + page content */}
+      <div style={{
+        flex: 1,
+        display: "flex",
+        flexDirection: "column",
+        minWidth: 0,
+        overflow: "hidden",
+      }}>
         <Topbar />
 
-        <main className="p-6">
+        {/* Each child route renders here */}
+        <main style={{ flex: 1, overflowY: "auto", padding: 20 }}>
           <Outlet />
         </main>
       </div>
