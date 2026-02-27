@@ -84,29 +84,10 @@ export default function Login() {
         }}>
           {/* Try the project image; fall back to a friendly SVG placeholder */}
           <img
-            src="/src/assets/images/login-illustration.png"
+            src="/login-illustration.jpg"
             alt="Grostore login"
             style={{ width: "100%", maxWidth: 340, objectFit: "contain" }}
-            onError={(e) => {
-              e.target.style.display = "none";
-              e.target.nextSibling.style.display = "flex";
-            }}
           />
-          {/* Fallback illustration */}
-          <div style={{
-            display: "none", flexDirection: "column", alignItems: "center", gap: 16,
-          }}>
-            <div style={{
-              width: 140, height: 140, borderRadius: "50%",
-              background: "#22c55e22",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              fontSize: 64,
-            }}>🛒</div>
-            <div style={{ fontSize: 22, fontWeight: 700, color: "#1e293b" }}>Grostore</div>
-            <div style={{ fontSize: 14, color: "#64748b", textAlign: "center", maxWidth: 220 }}>
-              Your all-in-one grocery store admin panel
-            </div>
-          </div>
         </div>
 
         {/* ── RIGHT: form ── */}
